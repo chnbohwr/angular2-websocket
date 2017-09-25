@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
 var Subject_1 = require("rxjs/Subject");
+require("rxjs/add/observable/fromPromise");
 var $WebSocket = /** @class */ (function () {
     function $WebSocket(url, protocols, config, binaryType) {
         this.url = url;
@@ -123,15 +124,7 @@ var $WebSocket = /** @class */ (function () {
      * @returns {Observable<any>}
      */
     $WebSocket.prototype.send4Observable = function (data, binary) {
-        var _this = this;
-        return Observable_1.Observable.create(function (observer) {
-            if (_this.send4Direct(data, binary)) {
-                return observer.next();
-            }
-            else {
-                return observer.error('Socket connection has been closed');
-            }
-        });
+        return Observable_1.Observable.fromPromise(this.send4Promise(data, binary));
     };
     /**
      * Set send(data) function return mode
