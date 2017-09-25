@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 
+import 'rxjs/add/observable/fromPromise';
+
 @Injectable()
 export class $WebSocket {
 
@@ -137,13 +139,7 @@ export class $WebSocket {
      * @returns {Observable<any>}
      */
     send4Observable(data, binary?: boolean): Observable<any> {
-        return Observable.create((observer) => {
-            if (this.send4Direct(data, binary)) {
-                return observer.next();
-            } else {
-                return observer.error('Socket connection has been closed');
-            }
-        });
+        return Observable.fromPromise(this.send4Promise(data, binary));
     }
 
     private send4Mode: WebSocketSendMode = WebSocketSendMode.Observable;

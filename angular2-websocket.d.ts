@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/observable/fromPromise';
 export declare class $WebSocket {
     private url;
     private protocols;
